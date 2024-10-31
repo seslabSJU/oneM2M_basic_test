@@ -1,0 +1,1081 @@
+{
+	"info": {
+		"_postman_id": "ed48eafd-de3c-4305-b4e5-65cb47efa4b6",
+		"name": "TinyIoT_API_Release2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "26519289"
+	},
+	"item": [
+		{
+			"name": "CSEBase",
+			"item": [
+				{
+					"name": "cb 조회",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "retrieve_csebase"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "X-M2M-Rvi",
+								"value": "2a"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json;ty=5"
+							}
+						],
+						"url": "{{mp_url}}/{{cb}}"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AE",
+			"item": [
+				{
+					"name": "ae 생성",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.environment.set(\"aei\", jsonData[\"m2m:ae\"].aei);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.onem2m-res+json;ty=2"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "create_ae"
+							},
+							{
+								"key": "X-M2M-origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json;ty=2"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "2a",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"m2m:ae\": {\n        \"rn\": \"myAE\",\n        \"api\": \"Nmyapp3\",\n        \"lbl\": [\n            \"key1\",\n            \"key2\"\n        ],\n        \"srv\": [\n            \"3\"\n        ],\n        \"rr\": true\n    }\n}\n// {\"m2m:ae\":{\"rn\": \"MyAe2\", \"api\": \"NMyAppId\", \"rr\": true, \"srv\": [   \"1\", \"2\", \"2a\"], \"poa\":[\"http://127.0.0.1:7300\"]}}\n// {\"m2m:sgn\":{\"vrq\":true}}"
+						},
+						"url": "{{mp_url}}/TinyIoT"
+					},
+					"response": []
+				},
+				{
+					"name": "ae 조회",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "retrieve_ae"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "2a"
+							}
+						],
+						"url": "{{mp_url}}/TinyIoT/[ae_rn]"
+					},
+					"response": []
+				},
+				{
+					"name": "ae 변경",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "update_ae"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "3"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"m2m:ae\": {\n        \"lbl\":[\"bsms\"]\n    }\n}"
+						},
+						"url": "{{mp_url}}/{{cb}}/[ae_rn]"
+					},
+					"response": []
+				},
+				{
+					"name": "ae 삭제",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "delete_ae"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "2a",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "{{mp_url}}/{{cb}}/[ae_rn]"
+					},
+					"response": []
+				}
+			],
+			"description": "Application Entity"
+		},
+		{
+			"name": "Container",
+			"item": [
+				{
+					"name": "cnt 생성",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "create_cnt"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json;ty=3"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "3",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"m2m:cnt\": {\n    \"rn\": \"status\",\n    \"lbl\": [\"key1\", \"key2\"],\n    \"mbs\": 16384\n  }\n}"
+						},
+						"url": "{{mp_url}}/{{cb}}/[ae_rn]"
+					},
+					"response": []
+				},
+				{
+					"name": "cnt 조회",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "retrieve_cnt"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "3",
+								"type": "text"
+							}
+						],
+						"url": "{{mp_url}}/{{cb}}/[ae_rn]/[cnt_rn]"
+					},
+					"response": []
+				},
+				{
+					"name": "cnt 변경",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "update_cnt"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json;ty=3"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "3",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"m2m:cnt\": {\n    \"lbl\":[\"20240628T155436\"]\n  }\n}"
+						},
+						"url": "{{mp_url}}/{{cb}}/[ae_rn]/[cnt_rn]"
+					},
+					"response": []
+				},
+				{
+					"name": "cnt 삭제",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "delete_cnt"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "X-M2M-Rvi",
+								"value": "3",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "{{mp_url}}/{{cb}}/[ae_rn]/[cnt_rn]"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ContentInstance",
+			"item": [
+				{
+					"name": "cin 생성",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept-encoding": true,
+							"connection": true,
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "create_cin"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json;ty=4"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "2a",
+								"type": "text"
+							},
+							{
+								"key": "Connection",
+								"value": "close",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"m2m:cin\": {\n        \"con\": \"12345\",\n        \"lbl\": [\"lnl1\"]\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{mp_url}}/{{cb}}/[ae_rn]/[cnt_rn]"
+					},
+					"response": []
+				},
+				{
+					"name": "cin 조회",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "retrieve_cin"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CADmin"
+							}
+						],
+						"url": "{{mp_url}}/{{cb}}/[ae_rn]/[cnt_rn]/[la,ol,cin_rn]"
+					},
+					"response": []
+				},
+				{
+					"name": "cin 삭제",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "delete_cin"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "X-M2M-Rvi",
+								"value": "3",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "{{mp_url}}/{{cb}}/[ae_rn]/[cnt_rn]/[la,ol,cin_rn]"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Subscription",
+			"item": [
+				{
+					"name": "sub 생성",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "create_sub"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json;ty=23"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "3"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"m2m:sub\": {\n        \"rn\": \"\",\n        \"enc\": {\n            \"net\": [\n                3,4\n            ]\n        },\n        \"nu\": [\n            \"\"\n        ],\n        \"exc\": 10\n    }\n}"
+						},
+						"url": "{{mp_url}}/{{cb}}"
+					},
+					"response": []
+				},
+				{
+					"name": "sub 조회",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "retrieve_sub"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "X-M2M-RvI",
+								"value": "2a"
+							}
+						],
+						"url": "{{mp_url}}/{{cb}}/[sub_uri]"
+					},
+					"response": []
+				},
+				{
+					"name": "sub 변경",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "update_sub"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json;ty=23"
+							},
+							{
+								"key": "X-M2M-Rvi",
+								"value": "3"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"m2m:sub\": {\n        \"nu\": [\n            \"\"\n        ]\n    }\n}"
+						},
+						"url": "{{mp_url}}/{{cb}}/[uri_to_sub]"
+					},
+					"response": []
+				},
+				{
+					"name": "sub 삭제",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "delete_sub"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "{{mp_url}}/{{cb}}/[uri_to_sub]"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RemoteCSE",
+			"item": [
+				{
+					"name": "csr 생성",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "create_csr"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "/[CSE_ID]"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json;ty=16"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "2a"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"m2m:csr\": {\n        \"rn\": \"MyRemoteCSEResource\",\n        \"cb\": \"/CSE_ID\",\n        \"rr\": false,\n        \"srv\": [\n            \"1\",\n            \"2\",\n            \"2a\"\n        ]\n    }\n}"
+						},
+						"url": "{{mp_url}}/{{cb}}"
+					},
+					"response": []
+				},
+				{
+					"name": "csr 조회",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "retrieve_csr"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							}
+						],
+						"url": "{{mp_url}}/{{cb}}/[csi]"
+					},
+					"response": []
+				},
+				{
+					"name": "csr 변경",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "update_csr"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-Rvi",
+								"value": "3",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"m2m:csr\": {\n        \"poa\":[\"http://127.0.0.1:8080\"]\n    }\n}"
+						},
+						"url": "{{mp_url}}/{{cb}}/[csi]"
+					},
+					"response": []
+				},
+				{
+					"name": "csr 삭제",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "delete_csi"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "{{mp_url}}/{{cb}}/[csi]"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AccessControlPolicy",
+			"item": [
+				{
+					"name": "acp 생성",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "create_acp"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "\bCAdmin"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json;ty=1"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "3"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"m2m:acp\": {\n        \"rn\": \"acp_rn\",\n        \"pv\": {\n            \"acr\": [\n                {\n                    \"acor\": [\n                        \"originator\"\n                    ],\n                    \"acop\": 61\n                }\n            ]\n        },\n        \"pvs\": {\n            \"acr\": [\n                {\n                    \"acor\": [\n                        \"originator\"\n                    ],\n                    \"acop\": 63\n                },\n                {\n                    \"acor\": [\n                        \"all\"\n                    ],\n                    \"acop\": 7\n                }\n            ]\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{mp_url}}/{{cb}}"
+					},
+					"response": []
+				},
+				{
+					"name": "acp 변경",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "update_acp"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-Rvi",
+								"value": "3"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"m2m:acp\": {\n        \"pv\": {\n            \"acr\": [\n                {\n                    \"acor\": [\n                        \"originator\"\n                    ],\n                    \"acop\": 62\n                }\n            ]\n        },\n        \"pvs\": {\n            \"acr\": [\n                {\n                    \"acor\": [\n                        \"originator\"\n                    ],\n                    \"acop\": 63\n                },\n                {\n                    \"acor\": [\n                        \"all\"\n                    ],\n                    \"acop\": 7\n                }\n            ]\n        }\n    }\n}"
+						},
+						"url": "{{mp_url}}/{{cb}}/[acp_rn]"
+					},
+					"response": []
+				},
+				{
+					"name": "acp 조회",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "retrieve_acp"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "3"
+							}
+						],
+						"url": "{{mp_url}}/{{cb}}/[acp_rn]"
+					},
+					"response": []
+				},
+				{
+					"name": "acp 삭제",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "delete_acp"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "3"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "{{mp_url}}/{{cb}}/[acp_rn]"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Group",
+			"item": [
+				{
+					"name": "grp 생성",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "create_grp"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json;ty=9"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "3"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"m2m:grp\": {\n        \"rn\": \"grp_rn\",\n        \"mid\": [\n            \"grp_member_uri\"\n        ],\n        \"mnm\": 10,\n        \"mt\":2,\n        \"csy\":3\n    }\n}"
+						},
+						"url": "{{mp_url}}/TinyIoT"
+					},
+					"response": []
+				},
+				{
+					"name": "grp 조회",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "retrieve_grp"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "2a",
+								"type": "text"
+							}
+						],
+						"url": "{{mp_url}}/{{cb}}/[uri_to_grp]"
+					},
+					"response": []
+				},
+				{
+					"name": "grp 변경",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "update_grp"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json;ty=9"
+							},
+							{
+								"key": "X-M2M-Rvi",
+								"value": "3",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"m2m:grp\": {\n        \"mid\":[\"{{cb}}/example1\", \"{{cb}}/example2\"]\n    }\n}"
+						},
+						"url": "{{mp_url}}/{{cb}}/[uri_to_grp]"
+					},
+					"response": []
+				},
+				{
+					"name": "grp 삭제",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/xml"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "delete_grp"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "4"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "{{mp_url}}/{{cb}}/[uri_to_grp]"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Discovery",
+			"item": [
+				{
+					"name": "Discovery operation (check params)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "fds345435"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "Cinterop"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "3"
+							},
+							{
+								"key": "lbl",
+								"value": "test4",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{mp_url}}/{{cb}}?fu=1",
+							"host": [
+								"{{mp_url}}"
+							],
+							"path": [
+								"{{cb}}"
+							],
+							"query": [
+								{
+									"key": "fu",
+									"value": "1",
+									"description": "filterUsage"
+								},
+								{
+									"key": "lbl",
+									"value": "cnt",
+									"description": "label",
+									"disabled": true
+								},
+								{
+									"key": "ty",
+									"value": "2+3+4",
+									"description": "type",
+									"disabled": true
+								},
+								{
+									"key": "pty",
+									"value": "2",
+									"description": "parentType",
+									"disabled": true
+								},
+								{
+									"key": "chty",
+									"value": null,
+									"description": "childType",
+									"disabled": true
+								},
+								{
+									"key": "sts",
+									"value": "101",
+									"description": "stateTagSmaller",
+									"disabled": true
+								},
+								{
+									"key": "crb",
+									"value": "20230920T053623",
+									"description": "createdBefore",
+									"disabled": true
+								},
+								{
+									"key": "cra",
+									"value": null,
+									"description": "createdAfter",
+									"disabled": true
+								},
+								{
+									"key": "sza",
+									"value": "5",
+									"description": "sizeAbove",
+									"disabled": true
+								},
+								{
+									"key": "szb",
+									"value": null,
+									"description": "sizeBelow",
+									"disabled": true
+								},
+								{
+									"key": "ofst",
+									"value": "2000",
+									"description": "offset",
+									"disabled": true
+								},
+								{
+									"key": "lim",
+									"value": null,
+									"description": "limit",
+									"disabled": true
+								},
+								{
+									"key": "rcn",
+									"value": "8",
+									"description": "resultContentType",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

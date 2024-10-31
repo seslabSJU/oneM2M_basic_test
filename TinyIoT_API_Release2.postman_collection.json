@@ -39,10 +39,11 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "**CB**\n\n- Retrieve"
 		},
 		{
-			"name": "AE",
+			"name": "Application Entity",
 			"item": [
 				{
 					"name": "ae 생성",
@@ -184,7 +185,7 @@
 					"response": []
 				}
 			],
-			"description": "Application Entity"
+			"description": "**AE**\n\n- Create\n    \n- Retrieve\n    \n- Update\n    \n- Delete"
 		},
 		{
 			"name": "Container",
@@ -317,7 +318,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "**CNT**\n\n- Create\n    \n- Retrieve\n    \n- Update\n    \n- Delete"
 		},
 		{
 			"name": "ContentInstance",
@@ -344,21 +346,16 @@
 								"value": "create_cin"
 							},
 							{
-								"key": "X-M2M-Origin",
-								"value": "CAdmin"
-							},
-							{
 								"key": "Content-Type",
 								"value": "application/json;ty=4"
 							},
 							{
-								"key": "X-M2M-RVI",
-								"value": "2a",
-								"type": "text"
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
 							},
 							{
-								"key": "Connection",
-								"value": "close",
+								"key": "X-M2M-RVI",
+								"value": "2a",
 								"type": "text"
 							}
 						],
@@ -390,7 +387,12 @@
 							},
 							{
 								"key": "X-M2M-Origin",
-								"value": "CADmin"
+								"value": "CAdmin"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "2a",
+								"type": "text"
 							}
 						],
 						"url": "{{mp_url}}/{{cb}}/[ae_rn]/[cnt_rn]/[la,ol,cin_rn]"
@@ -416,7 +418,7 @@
 							},
 							{
 								"key": "X-M2M-Rvi",
-								"value": "3",
+								"value": "2a",
 								"type": "text"
 							}
 						],
@@ -428,7 +430,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "**CIN**\n\n- Create\n    \n- Retrieve\n    \n- Delete\n    \n\nNote.\n\nUpdate operation is not allowed."
 		},
 		{
 			"name": "Subscription",
@@ -553,7 +556,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "A.K.A. **SUB**\n\n- Create\n    \n- Retrieve\n    \n- Update\n    \n- Delete"
 		},
 		{
 			"name": "RemoteCSE",
@@ -675,7 +679,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "**CSR**\n\n- Create\n    \n- Retrieve\n    \n- Update\n    \n- Delete"
 		},
 		{
 			"name": "AccessControlPolicy",
@@ -809,7 +814,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "**ACP**\n\n- Create\n    \n- Retrieve\n    \n- Update\n    \n- Delete\n    \n\nNote.\n\nTo apply ACP to resource, use acpi attribute"
 		},
 		{
 			"name": "Group",
@@ -940,7 +946,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "**GRP**\n\n- Create\n    \n- Retrieve\n    \n- Update\n    \n- Delete"
 		},
 		{
 			"name": "Discovery",
@@ -1018,7 +1025,7 @@
 								},
 								{
 									"key": "chty",
-									"value": null,
+									"value": "",
 									"description": "childType",
 									"disabled": true
 								},
@@ -1036,7 +1043,7 @@
 								},
 								{
 									"key": "cra",
-									"value": null,
+									"value": "",
 									"description": "createdAfter",
 									"disabled": true
 								},
@@ -1048,7 +1055,7 @@
 								},
 								{
 									"key": "szb",
-									"value": null,
+									"value": "",
 									"description": "sizeBelow",
 									"disabled": true
 								},
@@ -1060,7 +1067,7 @@
 								},
 								{
 									"key": "lim",
-									"value": null,
+									"value": "",
 									"description": "limit",
 									"disabled": true
 								},
@@ -1075,7 +1082,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Discovery operations\n\n- Filter usage (fu) should be 1 for discovery operation.\n    \n- To set multiple type, use + for delimiter (Type(ty), Parent Type(pty), Child Type(chty))\n    \n    - EX) For AE & CNT & CIN, 2+3+4\n        \n- If result is too large, Content Status(CTS) will be 1 (Partial Content) and Content Offset(CTO) will be included. Use offset(ofst) param to request next resources"
 		}
 	]
 }

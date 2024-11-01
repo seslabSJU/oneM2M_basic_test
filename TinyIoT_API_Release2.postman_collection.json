@@ -669,6 +669,10 @@
 							{
 								"key": "X-M2M-Origin",
 								"value": "CAdmin"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "3"
 							}
 						],
 						"body": {

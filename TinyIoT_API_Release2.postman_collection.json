@@ -700,7 +700,7 @@
 							},
 							{
 								"key": "X-M2M-Origin",
-								"value": "\bCAdmin"
+								"value": "CAdmin"
 							},
 							{
 								"key": "Content-Type",

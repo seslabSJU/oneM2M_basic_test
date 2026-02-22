@@ -434,6 +434,209 @@
 			"description": "**CIN**\n\n- Create\n    \n- Retrieve\n    \n- Delete\n    \n\nNote.\n\nUpdate operation is not allowed."
 		},
 		{
+			"name": "FlexContainer",
+			"item": [
+				{
+					"name": "fcnt 생성",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "create_fcnt"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json;ty=28"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"cod:tempe\": {\n        \"rn\": \"myFCNT\",\n        \"cnd\": \"org.onem2m.common.moduleclass.temperature\",\n        \"fcied\": true,\n        \"mni\": 10,\n        \"mbs\": 16384,\n        \"curT0\": 25.5\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{mp_url}}/{{cb}}/[ae_rn]"
+					},
+					"response": []
+				},
+				{
+					"name": "fcnt 조회",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "retrieve_fcnt"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "4",
+								"type": "text"
+							}
+						],
+						"url": "{{mp_url}}/{{cb}}/[ae_rn]/[fcnt_rn]"
+					},
+					"response": []
+				},
+				{
+					"name": "fcnt 변경",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "update_fcnt"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"cod:tempe\": {\n        \"curT0\": 30.0\n    }\n}"
+						},
+						"url": "{{mp_url}}/{{cb}}/[ae_rn]/[fcnt_rn]"
+					},
+					"response": []
+				},
+				{
+					"name": "fcnt 삭제",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "delete_fcnt"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "{{mp_url}}/{{cb}}/[ae_rn]/[fcnt_rn]"
+					},
+					"response": []
+				}
+			],
+			"description": "**FCNT**\n\n- Create\n    \n- Retrieve\n    \n- Update\n    \n- Delete\n    \n\nNote.\n\n- containerDefinition (cnd) is mandatory at creation.\n- fcinEnabled (fcied) controls FCIN creation on UPDATE.\n- Custom attributes (e.g. curT0, unit) are domain-specific.\n- When fcied=true, each UPDATE creates a new FCIN snapshot.\n- mni, mbs, mia control instance management (same as CNT)."
+		},
+		{
+			"name": "FlexContainerInstance",
+			"item": [
+				{
+					"name": "fcin 조회",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "retrieve_fcin"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "4",
+								"type": "text"
+							}
+						],
+						"url": "{{mp_url}}/{{cb}}/[ae_rn]/[fcnt_rn]/[la,ol,fcin_rn]"
+					},
+					"response": []
+				},
+				{
+					"name": "fcin 삭제",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "delete_fcin"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "{{mp_url}}/{{cb}}/[ae_rn]/[fcnt_rn]/[la,ol,fcin_rn]"
+					},
+					"response": []
+				}
+			],
+			"description": "**FCIN**\n\n- Retrieve\n    \n- Delete\n    \n\nNote.\n\nCreate and Update operations are not allowed.\nFCIN is automatically created when parent FCNT (with fcied=true) is updated.\nAccess latest via /la, oldest via /ol (same as CIN).\nRequires RVI=4."
+		},
+		{
 			"name": "Subscription",
 			"item": [
 				{

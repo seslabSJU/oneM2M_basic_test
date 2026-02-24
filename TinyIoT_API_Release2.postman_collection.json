@@ -89,7 +89,7 @@
 							"mode": "raw",
 							"raw": "{\n    \"m2m:ae\": {\n        \"rn\": \"myAE\",\n        \"api\": \"Nmyapp3\",\n        \"lbl\": [\n            \"key1\",\n            \"key2\"\n        ],\n        \"srv\": [\n            \"3\"\n        ],\n        \"rr\": true\n    }\n}\n// {\"m2m:ae\":{\"rn\": \"MyAe2\", \"api\": \"NMyAppId\", \"rr\": true, \"srv\": [   \"1\", \"2\", \"2a\"], \"poa\":[\"http://127.0.0.1:7300\"]}}\n// {\"m2m:sgn\":{\"vrq\":true}}"
 						},
-						"url": "{{mp_url}}/TinyIoT"
+						"url": "{{mp_url}}/{{cb}}"
 					},
 					"response": []
 				},
@@ -115,7 +115,7 @@
 								"value": "2a"
 							}
 						],
-						"url": "{{mp_url}}/TinyIoT/[ae_rn]"
+						"url": "{{mp_url}}/{{cb}}/[ae_rn]"
 					},
 					"response": []
 				},
@@ -570,7 +570,7 @@
 					"response": []
 				}
 			],
-			"description": "**FCNT**\n\n- Create\n    \n- Retrieve\n    \n- Update\n    \n- Delete\n    \n\nNote.\n\n- containerDefinition (cnd) is mandatory at creation.\n- fcinEnabled (fcied) controls FCIN creation on UPDATE.\n- Custom attributes (e.g. curT0, unit) are domain-specific.\n- When fcied=true, each UPDATE creates a new FCIN snapshot.\n- mni, mbs, mia control instance management (same as CNT)."
+			"description": "**FCNT**\n\n- Create\n    \n- Retrieve\n    \n- Update\n    \n- Delete\n    \n\nNote.\n\n**Device 타입의 FCNT를 먼저 생성하고, 그 하위에 ModuleClass 타입의 FCNT를 자식으로 생성해야 합니다.**\n- Device: 에어컨, TV 등 실제 장치를 나타내는 상위 컨테이너 (e.g. cod:deACo, deviceAirConditioner)\n- ModuleClass: 온도, 스위치 등 장치의 개별 기능을 나타내는 하위 컨테이너 (e.g. cod:tempe, temperature)\n\nDevice FCNT 생성 예시:\n```\n{\"cod:deACo\": {\"rn\": \"myDevice\", \"cnd\": \"org.onem2m.common.device.deviceAirConditioner\"}}\n```\nModuleClass FCNT 생성 예시 (Device FCNT 하위에):\n```\n{\"cod:tempe\": {\"rn\": \"myTemp\", \"cnd\": \"org.onem2m.common.moduleclass.temperature\", \"curT0\": 25.5}}\n```\n\n- containerDefinition (cnd) is mandatory at creation.\n- fcinEnabled (fcied) controls FCIN creation on UPDATE.\n- Custom attributes (e.g. curT0, unit) are domain-specific.\n- When fcied=true, each UPDATE creates a new FCIN snapshot.\n- mni, mbs, mia control instance management (same as CNT).\n\nSDT Structure.\n\nFCNT는 SDT(Smart Device Template)에 따라 Device 타입과 ModuleClass 타입으로 나뉩니다.\n\n1. 먼저 Device 타입의 FCNT를 생성합니다. (e.g. cod:deACo, cnd=org.onem2m.common.device.deviceAirConditioner)\n2. 그 하위에 ModuleClass 타입의 FCNT를 자식으로 생성합니다. (e.g. cod:tempe, cnd=org.onem2m.common.moduleclass.temperature)\n\nExample.\n\n```\nAE\n └── FCNT (Device: deviceAirConditioner)\n       ├── FCNT (ModuleClass: temperature)\n       ├── FCNT (ModuleClass: binarySwitch)\n       └── FCNT (ModuleClass: faultDetection)\n```\n\n- Device FCNT의 커스텀 속성: nodeLink, flexNodeLink 등 (링크 속성)\n- ModuleClass FCNT의 커스텀 속성: curT0, unit 등 (실제 센서 데이터)"
 		},
 		{
 			"name": "FlexContainerInstance",
@@ -635,6 +635,249 @@
 				}
 			],
 			"description": "**FCIN**\n\n- Retrieve\n    \n- Delete\n    \n\nNote.\n\nCreate and Update operations are not allowed.\nFCIN is automatically created when parent FCNT (with fcied=true) is updated.\nAccess latest via /la, oldest via /ol (same as CIN).\nRequires RVI=4."
+		},
+		{
+			"name": "TimeSeries",
+			"item": [
+				{
+					"name": "ts 생성",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "create_ts"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json;ty=29"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "2a",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"m2m:ts\": {\n        \"rn\": \"tempSensor\",\n        \"pei\": 5000,\n        \"mdd\": true,\n        \"mdn\": 3,\n        \"mdt\": 15000,\n        \"mni\": 100,\n        \"mbs\": 262144\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{mp_url}}/{{cb}}/[ae_rn]"
+					},
+					"response": []
+				},
+				{
+					"name": "ts 조회",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "retrieve_ts"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "2a",
+								"type": "text"
+							}
+						],
+						"url": "{{mp_url}}/{{cb}}/[ae_rn]/[ts_rn]"
+					},
+					"response": []
+				},
+				{
+					"name": "ts 변경",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "update_ts"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "2a",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"m2m:ts\": {\n        \"mni\": 200\n    }\n}"
+						},
+						"url": "{{mp_url}}/{{cb}}/[ae_rn]/[ts_rn]"
+					},
+					"response": []
+				},
+				{
+					"name": "ts 삭제",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "delete_ts"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "2a",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "{{mp_url}}/{{cb}}/[ae_rn]/[ts_rn]"
+					},
+					"response": []
+				}
+			],
+			"description": "**TS**\n\n- Create\n    \n- Retrieve\n    \n- Update\n    \n- Delete\n    \n\nNote.\n\n- pei: periodic interval (ms) for expected data arrival.\n- mdd: enable missing data detection.\n- mdn/mdt: missing data max count and timer.\n- mdc/mdlt: read-only, server-managed missing data state.\n- peid defaults to pei/2 if not specified.\n- When mdd=true, pei/peid/mdt/mdn cannot be updated."
+		},
+		{
+			"name": "TimeSeriesInstance",
+			"item": [
+				{
+					"name": "tsi 생성",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "create_tsi"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json;ty=30"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "2a",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"m2m:tsi\": {\n        \"con\": \"25.5\",\n        \"dgt\": \"20260223T120000,000000\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{mp_url}}/{{cb}}/[ae_rn]/[ts_rn]"
+					},
+					"response": []
+				},
+				{
+					"name": "tsi 조회",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "retrieve_tsi"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "2a",
+								"type": "text"
+							}
+						],
+						"url": "{{mp_url}}/{{cb}}/[ae_rn]/[ts_rn]/[la,ol,tsi_rn]"
+					},
+					"response": []
+				},
+				{
+					"name": "tsi 삭제",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-M2M-RI",
+								"value": "delete_tsi"
+							},
+							{
+								"key": "X-M2M-Origin",
+								"value": "CAdmin"
+							},
+							{
+								"key": "X-M2M-RVI",
+								"value": "2a",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "{{mp_url}}/{{cb}}/[ae_rn]/[ts_rn]/[la,ol,tsi_rn]"
+					},
+					"response": []
+				}
+			],
+			"description": "**TSI**\n\n- Create\n    \n- Retrieve\n    \n- Delete\n    \n\nNote.\n\nUpdate operation is not allowed.\ncon (content) and dgt (dataGenerationTime) are mandatory.\nsnr (sequenceNumber) is auto-assigned if not provided.\ndgt must be unique per parent TS (duplicate returns CONFLICT)."
 		},
 		{
 			"name": "Subscription",
@@ -1057,7 +1300,7 @@
 							"mode": "raw",
 							"raw": "{\n    \"m2m:grp\": {\n        \"rn\": \"grp_rn\",\n        \"mid\": [\n            \"grp_member_uri\"\n        ],\n        \"mnm\": 10,\n        \"mt\":2,\n        \"csy\":3\n    }\n}"
 						},
-						"url": "{{mp_url}}/TinyIoT"
+						"url": "{{mp_url}}/{{cb}}"
 					},
 					"response": []
 				},

@@ -465,7 +465,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"cod:tempe\": {\n        \"rn\": \"myFCNT\",\n        \"cnd\": \"org.onem2m.common.moduleclass.temperature\",\n        \"fcied\": true,\n        \"mni\": 10,\n        \"mbs\": 16384,\n        \"curT0\": 25.5\n    }\n}",
+							"raw": "{\n    \"cod:tempe\": {\n        \"rn\": \"myFCNT\",\n        \"cnd\": \"org.onem2m.common.moduleclass.temperature\",\n        \"fcied\": true,\n        \"mni\": 1000,\n        \"mbs\": 65536,\n        \"mia\": 157680000,\n        \"curT0\": 25.5\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
